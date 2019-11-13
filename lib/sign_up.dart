@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shall_we_order_mobile/src/generated/auth.pbgrpc.dart';
+import 'package:shall_we_order_mobile/src/grpc_client.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -24,6 +26,17 @@ class _SignUpPageState extends State<SignUpPage> {
     passwordTextFieldController.dispose();
     passwordRepeatTextFieldController.dispose();
     super.dispose();
+  }
+
+  Future<void> _signUp() async {
+    var client = AutherClient(GrpcClientSingleton().client);
+    var req = SignUpRequest()
+      ..id = idTextFieldController.text
+      ..password = passwordTextFieldController.text
+      ..gender = SignUpRequest_Gender.Male;
+
+    var res = await client.signUp(req);
+    print('Sign in return : ' + res.result.toString());
   }
 
   @override
@@ -65,11 +78,8 @@ class _SignUpPageState extends State<SignUpPage> {
               MaterialButton(
                 minWidth: MediaQuery.of(context).size.width,
                 color: Theme.of(context).primaryColor,
-                onPressed: () {
-                  // TODO : Sign in logic here
-                  print('Submitted ID : ${idTextFieldController.text}');
-                },
-                child: Text('Sign In'),
+                onPressed: () async => _signUp(),
+                child: Text('Sign Up'),
               ),
             ],
           )),

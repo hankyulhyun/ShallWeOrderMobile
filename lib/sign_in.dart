@@ -17,10 +17,11 @@ class _SignInPageState extends State<SignInPage> {
 
   Future<void> _signIn() async {
     var client = AutherClient(GrpcClientSingleton().client);
-    var req = SignInRequest();
-    req.id = idTextFieldController.text;
-    req.password = passwordTextFieldController.text;
-    req.rememberMe = _rememberMe;
+    var req = SignInRequest()
+      ..id = idTextFieldController.text
+      ..password = passwordTextFieldController.text
+      ..rememberMe = _rememberMe;
+
     var res = await client.signIn(req);
     print('Sign in return : ' + res.result.toString());
   }
