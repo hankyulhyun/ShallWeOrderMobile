@@ -44,6 +44,8 @@ const SignInReply$json = const {
   '1': 'SignInReply',
   '2': const [
     const {'1': 'result', '3': 1, '4': 1, '5': 5, '10': 'result'},
+    const {'1': 'access_token', '3': 2, '4': 1, '5': 9, '10': 'accessToken'},
+    const {'1': 'refresh_token', '3': 3, '4': 1, '5': 9, '10': 'refreshToken'},
   ],
 };
 

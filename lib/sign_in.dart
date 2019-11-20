@@ -16,14 +16,19 @@ class _SignInPageState extends State<SignInPage> {
   bool _rememberMe = false;
 
   Future<void> _signIn() async {
-    var client = AutherClient(GrpcClientSingleton().client);
+    var client = AutherClient(GrpcClientSingleton().insecureClient);
     var req = SignInRequest()
       ..id = idTextFieldController.text
       ..password = passwordTextFieldController.text
       ..rememberMe = _rememberMe;
 
     var res = await client.signIn(req);
+    if (res.result == 200)
+    {
+      GrpcClientSingleton().setToken(res.accessToken);
+    }
     print('Sign in return : ' + res.result.toString());
+    print('Sign in token : ' + res.accessToken);
   }
 
   @override
@@ -77,7 +82,7 @@ class _SignInPageState extends State<SignInPage> {
             MaterialButton(
               minWidth: MediaQuery.of(context).size.width,
               color: Theme.of(context).primaryColor,
-              onPressed: () {
+              onPressed: () async {
                 // TODO : Navigate to sign up page
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return SignUpPage();

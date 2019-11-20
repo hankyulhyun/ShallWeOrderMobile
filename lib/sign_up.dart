@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grpc/grpc.dart';
 import 'package:shall_we_order_mobile/src/generated/auth.pbgrpc.dart';
 import 'package:shall_we_order_mobile/src/grpc_client.dart';
 
@@ -29,11 +32,24 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> _signUp() async {
-    var client = AutherClient(GrpcClientSingleton().client);
     var req = SignUpRequest()
       ..id = idTextFieldController.text
       ..password = passwordTextFieldController.text
       ..gender = SignUpRequest_Gender.Male;
+
+    Map<String, String> meta = new Map();
+    meta['Authorization'] = "Bearer " + GrpcClientSingleton().accessToken;
+
+    final channel = new ClientChannel('127.0.0.1',
+      port: 5003,
+      options: ChannelOptions(
+        credentials: ChannelCredentials.insecure(),
+      ));
+
+
+    var client = AutherClient(channel,
+      options: new CallOptions(metadata: meta),
+    );
 
     var res = await client.signUp(req);
     print('Sign in return : ' + res.result.toString());

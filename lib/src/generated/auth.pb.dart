@@ -159,6 +159,8 @@ class SignInRequest extends $pb.GeneratedMessage {
 class SignInReply extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignInReply', package: const $pb.PackageName('Auth'), createEmptyInstance: create)
     ..a<$core.int>(1, 'result', $pb.PbFieldType.O3)
+    ..aOS(2, 'accessToken')
+    ..aOS(3, 'refreshToken')
     ..hasRequiredFields = false
   ;
 
@@ -185,6 +187,24 @@ class SignInReply extends $pb.GeneratedMessage {
   $core.bool hasResult() => $_has(0);
   @$pb.TagNumber(1)
   void clearResult() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get accessToken => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set accessToken($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAccessToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAccessToken() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get refreshToken => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set refreshToken($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRefreshToken() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRefreshToken() => clearField(3);
 }
 
 class SignOutReply extends $pb.GeneratedMessage {
