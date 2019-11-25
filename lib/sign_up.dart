@@ -37,19 +37,8 @@ class _SignUpPageState extends State<SignUpPage> {
       ..password = passwordTextFieldController.text
       ..gender = SignUpRequest_Gender.Male;
 
-    Map<String, String> meta = new Map();
-    meta['Authorization'] = "Bearer " + GrpcClientSingleton().accessToken;
-
-    final channel = new ClientChannel('127.0.0.1',
-      port: 5003,
-      options: ChannelOptions(
-        credentials: ChannelCredentials.insecure(),
-      ));
-
-
-    var client = AutherClient(channel,
-      options: new CallOptions(metadata: meta),
-    );
+    final channel = GrpcClientSingleton().insecureClient;
+    var client = AutherClient(channel);
 
     var res = await client.signUp(req);
     print('Sign in return : ' + res.result.toString());

@@ -25,10 +25,12 @@ class _SignInPageState extends State<SignInPage> {
     var res = await client.signIn(req);
     if (res.result == 200)
     {
-      GrpcClientSingleton().setToken(res.accessToken);
+      GrpcClientSingleton().setAccessToken(res.accessToken);
+      GrpcClientSingleton().setRefreshToken(res.refreshToken);
     }
     print('Sign in return : ' + res.result.toString());
-    print('Sign in token : ' + res.accessToken);
+    print('Sign in access token : ' + res.accessToken);
+    print('Sign in refresh token : ' + res.refreshToken);
   }
 
   @override
