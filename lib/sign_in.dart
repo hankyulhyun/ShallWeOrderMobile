@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shall_we_order_mobile/dashboard.dart';
 import 'package:shall_we_order_mobile/sign_up.dart';
 import 'package:shall_we_order_mobile/src/generated/auth.pbgrpc.dart';
 import 'package:shall_we_order_mobile/src/grpc_client.dart';
@@ -23,10 +24,17 @@ class _SignInPageState extends State<SignInPage> {
       ..rememberMe = _rememberMe;
 
     var res = await client.signIn(req);
-    if (res.result == 200)
-    {
+    if (res.result == 200) {
       GrpcClientSingleton().setAccessToken(res.accessToken);
       GrpcClientSingleton().setRefreshToken(res.refreshToken);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => DashboardPage()),
+      );
+    } else {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text("로그인에 실패하였습니다."),
+      ));
     }
     print('Sign in return : ' + res.result.toString());
     print('Sign in access token : ' + res.accessToken);

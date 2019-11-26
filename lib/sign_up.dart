@@ -1,8 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:grpc/grpc.dart';
+import 'package:shall_we_order_mobile/sign_in.dart';
 import 'package:shall_we_order_mobile/src/generated/auth.pbgrpc.dart';
 import 'package:shall_we_order_mobile/src/grpc_client.dart';
 
@@ -41,6 +39,12 @@ class _SignUpPageState extends State<SignUpPage> {
     var client = AutherClient(channel);
 
     var res = await client.signUp(req);
+    if (res.result == 200) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => SignInPage()),
+      );
+    }
     print('Sign in return : ' + res.result.toString());
   }
 
