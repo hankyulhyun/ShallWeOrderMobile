@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shall_we_order_mobile/create_order.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -14,6 +15,14 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: Center(
         child: Text('Dashboard Content'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return CreateOrderPage();
+          }));
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
